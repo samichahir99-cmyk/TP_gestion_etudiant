@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: require("path").join(__dirname, ".env") });
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -17,7 +17,12 @@ app.get("/api/test", (req, res) => {
 
 async function startServer() {  
     try {    
-        await mongoose.connect(process.env.MONGO_URI);
+        const mongoUri = process.env.MONGODB_URI;
+        if (!mongoUri) {
+            throw new Error("MONGODB_URI is not configured");
+        }
+
+        await mongoose.connect(mongoUri);
         console.log("MongoDB est connecté");
         app.listen(PORT, () => {      
             console.log(`Serveur lancé sur le port ${PORT}`);    
