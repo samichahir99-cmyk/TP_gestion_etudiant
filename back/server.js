@@ -24,7 +24,8 @@ async function startServer() {
         });  
     }
     catch(error){
-        console.error("Erreur MongoDB :", error.message);process.exit(1);  
+        console.error("Erreur MongoDB :", error.message);
+        process.exit(1);  
     }
 }
 
